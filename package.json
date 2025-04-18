@@ -1,8 +1,8 @@
 {
   "name": "baidu-cleaner",
-  "displayName": "Baidu cleaner",
-  "version": "0.0.1",
-  "description": "A basic Plasmo extension.",
+  "displayName": "百度净化器",
+  "version": "1.0.0",
+  "description": "屏蔽百度搜索结果页面右侧的热搜榜和广告",
   "author": "caolv",
   "scripts": {
     "dev": "plasmo dev",
@@ -24,8 +24,7 @@
     "typescript": "5.3.3"
   },
   "manifest": {
-    "host_permissions": [
-      "https://*/*"
-    ]
+    "permissions": ["storage"],
+    "host_permissions": ["*://www.baidu.com/*"]
   }
 }
