@@ -4,12 +4,14 @@ import { useEffect, useState } from "react"
 interface Settings {
   autoHideHotSearch: boolean
   showControlButton: boolean
+  autoHideAd: boolean
 }
 
 // 默认设置
 const defaultSettings: Settings = {
   autoHideHotSearch: true,
-  showControlButton: true
+  showControlButton: true,
+  autoHideAd: true
 }
 
 // 样式对象
@@ -129,12 +131,22 @@ function IndexPopup() {
           />
         </label>
         
-        <label style={styles.optionLabelLast}>
+        <label style={styles.optionLabel}>
           <span>显示控制按钮</span>
           <input
             type="checkbox"
             checked={settings.showControlButton}
             onChange={(e) => updateSetting("showControlButton", e.target.checked)}
+            style={styles.checkbox}
+          />
+        </label>
+        
+        <label style={styles.optionLabelLast}>
+          <span>自动屏蔽广告</span>
+          <input
+            type="checkbox"
+            checked={settings.autoHideAd}
+            onChange={(e) => updateSetting("autoHideAd", e.target.checked)}
             style={styles.checkbox}
           />
         </label>

@@ -4,12 +4,14 @@ import { useEffect, useState } from "react"
 interface Settings {
   autoHideHotSearch: boolean
   showControlButton: boolean
+  autoHideAd: boolean
 }
 
 // 默认设置
 const defaultSettings: Settings = {
   autoHideHotSearch: true,
-  showControlButton: true
+  showControlButton: true,
+  autoHideAd: true
 }
 
 // 选项页面样式
@@ -184,10 +186,7 @@ function OptionsPage() {
 
   return (
     <div style={styles.container}>
-      <div style={styles.logo}>
-        <img src="/assets/icon.png" alt="logo" style={styles.logoImg} />
-      </div>
-      <h1 style={styles.header}>百度热搜屏蔽器</h1>
+      <h1 style={styles.header}>百度搜索净化器</h1>
       
       <div style={styles.optionContainer}>
         <div style={styles.optionRow}>
@@ -198,6 +197,17 @@ function OptionsPage() {
           <Switch 
             checked={settings.autoHideHotSearch} 
             onChange={(checked) => updateSetting('autoHideHotSearch', checked)} 
+          />
+        </div>
+        
+        <div style={styles.optionRow}>
+          <div style={styles.optionContent}>
+            <h3 style={styles.optionTitle}>自动屏蔽广告</h3>
+            <p style={styles.optionDescription}>自动隐藏百度搜索结果中的广告</p>
+          </div>
+          <Switch
+            checked={settings.autoHideAd}
+            onChange={(checked) => updateSetting('autoHideAd', checked)}
           />
         </div>
         
