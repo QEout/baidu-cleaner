@@ -1,8 +1,8 @@
 {
   "name": "baidu-cleaner",
   "displayName": "净化百度",
-  "version": "1.0.0",
-  "description": "屏蔽百度搜索结果页面右侧的热搜榜和广告",
+  "version": "1.2.0",
+  "description": "屏蔽百度页面右侧的热搜榜和搜索结果中的广告",
   "author": "caolv",
   "scripts": {
     "dev": "plasmo dev",
