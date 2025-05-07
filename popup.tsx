@@ -104,7 +104,7 @@ function IndexPopup() {
   const updateSetting = (key: keyof Settings, value: boolean) => {
     const newSettings = { ...settings, [key]: value }
     setSettings(newSettings)
-    
+
     chrome.storage.sync.set(newSettings, () => {
       setStatus("设置已更新，刷新页面后生效")
       setTimeout(() => setStatus(""), 2000)
@@ -119,29 +119,20 @@ function IndexPopup() {
   return (
     <div style={styles.container}>
       <h2 style={styles.header}>百度热搜屏蔽器</h2>
-      
+
       <div style={styles.optionsContainer}>
         <label style={styles.optionLabel}>
           <span>自动屏蔽热搜榜</span>
           <input
             type="checkbox"
             checked={settings.autoHideHotSearch}
-            onChange={(e) => updateSetting("autoHideHotSearch", e.target.checked)}
+            onChange={(e) =>
+              updateSetting("autoHideHotSearch", e.target.checked)
+            }
             style={styles.checkbox}
           />
         </label>
-        
         <label style={styles.optionLabel}>
-          <span>显示控制按钮</span>
-          <input
-            type="checkbox"
-            checked={settings.showControlButton}
-            onChange={(e) => updateSetting("showControlButton", e.target.checked)}
-            style={styles.checkbox}
-          />
-        </label>
-        
-        <label style={styles.optionLabelLast}>
           <span>自动屏蔽广告</span>
           <input
             type="checkbox"
@@ -149,24 +140,27 @@ function IndexPopup() {
             onChange={(e) => updateSetting("autoHideAd", e.target.checked)}
             style={styles.checkbox}
           />
+        </label>{" "}
+        <label style={styles.optionLabelLast}>
+          <span>显示控制按钮</span>
+          <input
+            type="checkbox"
+            checked={settings.showControlButton}
+            onChange={(e) =>
+              updateSetting("showControlButton", e.target.checked)
+            }
+            style={styles.checkbox}
+          />
         </label>
       </div>
-      
-      <button
-        onClick={openOptions}
-        style={styles.button}>
+
+      <button onClick={openOptions} style={styles.button}>
         高级设置
       </button>
-      
-      {status && (
-        <p style={styles.status}>
-          {status}
-        </p>
-      )}
-      
-      <p style={styles.footer}>
-        版本 1.0.0
-      </p>
+
+      {status && <p style={styles.status}>{status}</p>}
+
+      <p style={styles.footer}>版本 1.0.0</p>
     </div>
   )
 }

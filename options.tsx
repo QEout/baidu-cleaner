@@ -231,7 +231,7 @@ function OptionsPage() {
       </div>
       
       <div style={styles.footer}>
-        <p>百度热搜屏蔽器 v1.0.0 | 让你专注于搜索结果</p>
+        <p>净化百度 v1.3.0 | 让你专注于搜索结果</p>
       </div>
     </div>
   )
