@@ -118,7 +118,7 @@ function IndexPopup() {
 
   return (
     <div style={styles.container}>
-      <h2 style={styles.header}>百度热搜屏蔽器</h2>
+      <h2 style={styles.header}>净化百度</h2>
 
       <div style={styles.optionsContainer}>
         <label style={styles.optionLabel}>
@@ -140,7 +140,7 @@ function IndexPopup() {
             onChange={(e) => updateSetting("autoHideAd", e.target.checked)}
             style={styles.checkbox}
           />
-        </label>{" "}
+        </label>
         <label style={styles.optionLabelLast}>
           <span>显示控制按钮</span>
           <input
@@ -160,7 +160,7 @@ function IndexPopup() {
 
       {status && <p style={styles.status}>{status}</p>}
 
-      <p style={styles.footer}>版本 1.0.0</p>
+      <p style={styles.footer}>版本 1.3.0</p>
     </div>
   )
 }
