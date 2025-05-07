@@ -137,20 +137,28 @@ function HotSearchBlocker() {
 
   // 更新元素显示状态
   const updateElementsVisibility = () => {
-    if (settings.autoHideHotSearch && !hotSearchVisible) {
-      hideHotSearchElements()
-    } else if (hotSearchVisible) {
-      showHotSearchElements()
-    }
-    if (settings.autoHideAd && !adVisible) {
-      hideAdElements()
-    } else if (adVisible) {
-      showAdElements()
+    try {
+      if (!document.body) return
+
+      if (settings.autoHideHotSearch && !hotSearchVisible) {
+        hideHotSearchElements()
+      } else if (hotSearchVisible) {
+        showHotSearchElements()
+      }
+      if (settings.autoHideAd && !adVisible) {
+        hideAdElements()
+      } else if (adVisible) {
+        showAdElements()
+      }
+    } catch (error) {
+      console.error('更新元素显示状态时出错:', error)
     }
   }
 
   // 初始化热搜屏蔽功能
   const initHotSearchBlocker = () => {
+    if (!document.body) return () => {}
+
     updateElementsVisibility()
     const interval = setInterval(updateElementsVisibility, 3000)
     return () => clearInterval(interval)
@@ -158,6 +166,8 @@ function HotSearchBlocker() {
 
   // 监听DOM变化
   const observeDOMChanges = () => {
+    if (!document.body) return () => {}
+
     const observer = new MutationObserver(updateElementsVisibility)
     observer.observe(document.body, {
       childList: true,
@@ -168,26 +178,41 @@ function HotSearchBlocker() {
 
   // 加载设置
   useEffect(() => {
-    chrome.storage.sync.get(defaultSettings, (items) => {
-      setSettings(items as Settings)
-      setHotSearchVisible(!items.autoHideHotSearch)
-      setAdVisible(!items.autoHideAd)
-    })
+    try {
+      chrome.storage.sync.get(defaultSettings, (items) => {
+        if (chrome.runtime.lastError) {
+          console.error('获取设置时出错:', chrome.runtime.lastError)
+          return
+        }
+        setSettings(items as Settings)
+        setHotSearchVisible(!items.autoHideHotSearch)
+        setAdVisible(!items.autoHideAd)
+      })
+    } catch (error) {
+      console.error('加载设置时出错:', error)
+    }
   }, [])
 
   // 初始化和监听DOM变化
   useEffect(() => {
-    const cleanupBlocker = initHotSearchBlocker()
-    const cleanupObserver = observeDOMChanges()
+    let cleanupBlocker: (() => void) | undefined
+    let cleanupObserver: (() => void) | undefined
+
+    try {
+      cleanupBlocker = initHotSearchBlocker()
+      cleanupObserver = observeDOMChanges()
+    } catch (error) {
+      console.error('初始化功能时出错:', error)
+    }
 
     return () => {
-      cleanupBlocker()
-      cleanupObserver()
+      cleanupBlocker?.()
+      cleanupObserver?.()
     }
   }, [settings, hotSearchVisible, adVisible])
 
   // 渲染控制按钮
-  if (!settings.showControlButton) return null
+  if (!settings.showControlButton || !document.body) return null
 
   return (
     <div>
